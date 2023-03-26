@@ -11,30 +11,64 @@ Created on Sun Mar 26 00:38:30 2023
 from PyPDF2 import PdfFileReader
 import pyttsx3
 import PyPDF2
+import os
 
-# path of the PDF file
-path = open('C:/Users/Pavankumar/Downloads/Living with the Himalayan Masters ( PDFDrive ).pdf', 'rb')
 
-# creating a PdfFileReader object
-pdfReader = PyPDF2.PdfReader(path)
+def read_book():
+    
+    # pdf = 'C:/Users/Pavankumar/Downloads/Living with the Himalayan Masters ( PDFDrive ).pdf'
+    print("Enter the path of the file location!!")
+    pdfPath = str(input())     
+    if not pdfPath:
+        print("You must have to enter the PDF path")
+    else:
+        filename = os.path.basename(pdfPath)
+        print("You are reading: " + filename)
+        
+          
+    # path of the PDF file
+    path = open(pdfPath, 'rb')
+    
+    # creating a PdfFileReader object
+    pdfReader = PyPDF2.PdfReader(path)
+    
+    number_of_pages = len(pdfReader.pages)
+    print("Enter the page number you want to read out of: " + str(number_of_pages))
+    page_number = int(input())
+    page = pdfReader.pages[page_number]
+    
+    text = page.extract_text()
+    # print(text)
+    
+    engine = pyttsx3.init()
+    
+    voices = engine.getProperty('voices')
+    #Male
+    engine.setProperty('voice', voices[0].id)  
+    
+    #Female
+    # engine.setProperty('voice', voices[0].id)
+    
+    # print("Default speed set to 150 words per minute")
+    # wordCount = ''
+    # if not wordCount:
+    #     engine.setProperty('rate', 150)
+    # else:
+    #     print("Enter the desired words per minute")
+    #     wordCount = int(input())
+    #     engine.setProperty('rate', wordCount)
+    
+    
+    engine.setProperty('rate', 150)
+    engine.setProperty('volume',.75)
+    
+    engine.say(text)
+    engine.runAndWait()
+    
 
-number_of_pages = len(pdfReader.pages)
-page = pdfReader.pages[50]
+def main():
+    read_book()
+    
 
-text = page.extract_text()
-
-engine = pyttsx3.init()
-
-voices = engine.getProperty('voices')
-#Male
-engine.setProperty('voice', voices[0].id)  
-
-#Female
-# engine.setProperty('voice', voices[1].id)
-
-engine.setProperty('rate', 150)
-
-engine.setProperty('volume',.75)
-
-engine.say(text)
-engine.runAndWait()
+if __name__ == "__main__":
+    main()    
