@@ -14,7 +14,7 @@ I have created a docker file with all the details to use docker use below comman
 
 <ol>
   <br>
-  <li>docker build -t pavankumar-scraper . </li>
+  <li>docker build -t pavan-audiobook . </li>
 </ol>
 <br>
 <br>
@@ -23,7 +23,7 @@ I have created a docker file with all the details to use docker use below comman
 
 <ol>
   <br>
-  <li>docker run -p 80:80 pavankumar-scraper </li>
+  <li>docker run -it --rm pavan-audiobook </li>
 </ol>
 
 
